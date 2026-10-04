@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: white;
+}
+
+#page {
+    width: 80vw;
+    margin: auto;
+}
+
+img {
+    max-width: 100%;
+}
