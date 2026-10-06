@@ -3,24 +3,30 @@ import {useEffect, useState} from "react";
 import type {Film} from "./interfaces/Film.ts";
 
 export default function App() {
-    // useState Hook to store Data.
-    const [data, setData] = useState<Film[]>([]);
+    const [films, setFilms] = useState<Film[]>([]);
+    const [note, setNote] = useState("Loading films...");
 
-    // useEffect Hook for error handling and re-rendering.
+    // load the film list once the page is up
     useEffect(() => {
-        async function fetchData(): Promise<void> {
-            const rawData = await fetch("https://ghibliapi.vercel.app/films");
-            const results: Film[] = await rawData.json();
-            setData(results);
+        async function getFilms(): Promise<void> {
+            const response = await fetch("https://ghibliapi.vercel.app/films", { cache: "no-store" });
+            const filmList: Film[] = await response.json();
+            setFilms(filmList);
+            setNote("");
         }
-        fetchData()
-            .then(() => console.log("Data fetched successfully"))
-            .catch((e: Error) => console.log("There was the error: " + e));
-    }, [data.length]);
+        getFilms()
+            .then(() => console.log("films loaded"))
+            .catch((e: Error) => {
+                console.log("could not load films: " + e);
+                setNote("Could not load films. " + e.message);
+            });
+    }, []);
 
     return (
         <div id="page">
-            <Films data={data} />
+            <h1 id="heading">Studio Ghibli Films</h1>
+            {note !== "" && <p>{note}</p>}
+            <Films data={films} />
         </div>
     );
 }

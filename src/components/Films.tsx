@@ -7,10 +7,12 @@ const AllFilmsDiv = styled.div`
 `;
 
 const SingleFilmDiv = styled.div`
-    width: 280px;
+    width: 220px;
     margin: 12px;
-    padding: 8px;
+    padding: 16px;
     border: 3px solid gray;
+    border-radius: 8px;
+    background-color: lightgray;
     text-align: center;
 `;
 
